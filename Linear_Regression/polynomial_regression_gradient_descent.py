@@ -37,6 +37,7 @@ class Ployfit:
         for i in range(self.n - 1):
             X = np.hstack((X, _x ** (self.n - i - 1)))
         X = np.hstack((X, np.ones((self.m, 1))))
+        print(X)
         weight = np.random.randn(self.n + 1, 1)
         weight_old = weight
         for i in range(loop_max):
@@ -46,7 +47,6 @@ class Ployfit:
             weight = weight - 1 / np.sqrt((gradient ** 2).mean()) * gradient * alpha
             self.loss.append(((y_hat - _y) ** 2).mean())
             new_J=(1/(2*self.m))*(X.dot(weight)-_y)**2
-            print(weight-weight_old)
             # 当weight 基本不变或者其中有一个为0时，就停止操作
             if np.abs(weight - weight_old).all() <= threshold:
                 break
@@ -75,6 +75,7 @@ class Ployfit:
         title = title + w[-2] + '$x$'
         title = title + w[-1]
         plt.figure(figsize=(8, 6))
+        print(self.x.shape)
         plt.plot(self.x, self.y, '+', label='original data')
         plt.plot(self.x, self.y_hat, 'r-', lw=2, label='Polynomial Curve Fitting')
         plt.xlabel('${}$'.format(self.x_label), fontdict={'fontsize': 13})
